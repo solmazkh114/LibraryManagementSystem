@@ -1,0 +1,6 @@
+# ignore bin folder
+bin/
+
+# Eclipse metadata files
+/.project
+.classpath
