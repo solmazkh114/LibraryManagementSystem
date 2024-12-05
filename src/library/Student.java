@@ -18,8 +18,8 @@ public class Student {
 	/**
 	 * maximum number of books other people can borrow
 	 */
-	static int Max_NUMBER_OTHERS = 3;
-	
+	static int MAX_NUMBER_OTHERS = 4;
+
 	// Instance variables
 
 	/**
@@ -37,12 +37,12 @@ public class Student {
 	 */
 	ArrayList<Book> listBooks = new ArrayList<Book>();
 
-
-
 	// Constructor
 
 	/**
-	 * Constructor of the Student class: Create a Student object for the given name and given ID number
+	 * Constructor of the Student class: Create a Student object for the given name
+	 * and given ID number
+	 * 
 	 * @param name
 	 * @param ID
 	 */
@@ -52,8 +52,7 @@ public class Student {
 	}
 
 	/**
-	 * Override the toString() method
-	 * return student name and ID
+	 * Override the toString() method return student name and ID
 	 */
 	public String toString() {
 		return this.name + " (ID: " + this.ID + ")";
@@ -62,10 +61,11 @@ public class Student {
 	// methods
 	/**
 	 * Student borrows the given book
+	 * 
 	 * @param book to borrow
-	 * @throws Exception if the student already borrowed this book, 
-	 *                   if student met the maximum number of books that she/he can borrow, 
-	 *                   if the book is not available (book.availableNumber =0)
+	 * @throws Exception if the student already borrowed this book, if student met
+	 *                   the maximum number of books that she/he can borrow, if the
+	 *                   book is not available (book.availableNumber =0)
 	 */
 	public void borrowBook(Book book) throws Exception {
 		if (this.listBooks.contains(book)) {
@@ -86,29 +86,19 @@ public class Student {
 	}
 
 	/**
-	 * Check whether the student based on its program (Ph.D. (student ID starts with `p`), master (student ID starts with `m`), and other) 
-	 * reached the maximum number of books who can borrowed
-	 * @return true if reached, No if not reached
+	 * Check whether the student based on its program (Ph.D. (student ID starts with
+	 * `p`), master (student ID starts with `m`), and other) reached the maximum
+	 * number of books who can borrowed
+	 * 
+	 * @return true if reached
 	 */
 	public boolean metMax() {
 		if (this.ID.startsWith("p")) {
-			if (this.listBooks.size() == Student.MAX_NUMBER_PHD) {
-				return true;
-			} else {
-				return false;
-			}
+			return (this.listBooks.size() == Student.MAX_NUMBER_PHD);
 		} else if (this.ID.startsWith("m")) {
-			if (this.listBooks.size() == Student.MAX_NUMBER_MASTER) {
-				return true;
-			} else {
-				return false;
-			}
+			return (this.listBooks.size() == Student.MAX_NUMBER_MASTER);
 		} else {
-			if (this.listBooks.size() == Student.Max_NUMBER_OTHERS) {
-				return true;
-			} else {
-				return false;
-			}
+			return (this.listBooks.size() == Student.MAX_NUMBER_OTHERS);
 		}
 	}
 
@@ -116,29 +106,29 @@ public class Student {
 	 * print list of books that the student borrowed (call book.toString())
 	 */
 	public void printListBooks() {
-		System.out.println(this.toString() +" have borrowed " + this.listBooks.size() + " books.");
+		System.out.println(this.toString() + " has borrowed " + this.listBooks.size() + " books.");
 		System.out.println("List of books:");
-		for (Book b: this.listBooks) {
-			System.out.println(b);//call book.toString()
+		for (Book b : this.listBooks) {
+			System.out.println(b);// call book.toString()
 		}
 	}
 
 	/**
-	 *  Return a book to the library by removing it from list of borrowed books and and add one to available items 
+	 * Return a book to the library by removing it from list of borrowed books and
+	 * and add one to available items
+	 * 
 	 * @param book to return
 	 * @throws Exception if the book does not exist in the list of student's book
 	 */
 	public void returnBook(Book book) throws Exception {
-		//First check if the book exists in the list of books
+		// First check if the book exists in the list of books
 		if (this.listBooks.contains(book)) {
-		// remove the book from listBooks
-		this.listBooks.remove(book);
-		book.availableNumber +=1;
-		}else {
-			throw  new Exception ("The book does not exist in the list of your books.");
+			// remove the book from listBooks
+			this.listBooks.remove(book);
+			book.availableNumber += 1;
+		} else {
+			throw new Exception("The book does not exist in the list of your books.");
 		}
 	}
-	
 
-	}
-
+}
