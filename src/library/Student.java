@@ -70,18 +70,16 @@ public class Student {
 	public void borrowBook(Book book) throws Exception {
 		if (this.listBooks.contains(book)) {
 			throw new Exception("Student already borrowed this book");
+		}
+		// check student meet the maximum number of books
+		if (this.metMax()) {
+			throw new Exception("Already achieved the maximum number of books that the student can borrow");
+		}
+		if (book.checkAvailability()) {
+			book.availableNumber -= 1;
+			this.listBooks.addFirst(book);
 		} else {
-			// check student meet the maximum number of books
-			if (this.metMax()) {
-				throw new Exception("Already achieved the maximum number of books that the student can borrow");
-			} else {
-				if (book.checkAvailability()) {
-					book.availableNumber -= 1;
-					this.listBooks.addFirst(book);
-				} else {
-					throw new Exception("This book is not available");
-				}
-			}
+			throw new Exception("This book is not available");
 		}
 	}
 
