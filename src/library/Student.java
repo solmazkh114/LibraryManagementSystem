@@ -35,7 +35,6 @@ public class Student {
 	/**
 	 * A list that contains number of books the student borrowed
 	 */
-
 	ArrayList<Book> listBooks = new ArrayList<Book>();
 
 
@@ -43,11 +42,9 @@ public class Student {
 	// Constructor
 
 	/**
-	 * Constructor of the Student class: Create a Student object for the given name
-	 * and given id number
-	 * 
+	 * Constructor of the Student class: Create a Student object for the given name and given ID number
 	 * @param name
-	 * @param dId
+	 * @param ID
 	 */
 	public Student(String name, String ID) {
 		this.name = name;
@@ -55,6 +52,7 @@ public class Student {
 	}
 
 	/**
+	 * Override the toString() method
 	 * return student name and ID
 	 */
 	public String toString() {
@@ -63,12 +61,11 @@ public class Student {
 
 	// methods
 	/**
-	 * Student borrow the given book
-	 * 
+	 * Student borrows the given book
 	 * @param book to borrow
-	 * @throws Exception if the student already borrowed this book, student met the
-	 *                   maximum number of books that she/he can borrow, the book is
-	 *                   not available
+	 * @throws Exception if the student already borrowed this book, 
+	 *                   if student met the maximum number of books that she/he can borrow, 
+	 *                   if the book is not available (book.availableNumber =0)
 	 */
 	public void borrowBook(Book book) throws Exception {
 		if (this.listBooks.contains(book)) {
@@ -88,6 +85,11 @@ public class Student {
 		}
 	}
 
+	/**
+	 * Check whether the student based on its program (Ph.D. (student ID starts with `p`), master (student ID starts with `m`), and other) 
+	 * reached the maximum number of books who can borrowed
+	 * @return true if reached, No if not reached
+	 */
 	public boolean metMax() {
 		if (this.ID.startsWith("p")) {
 			if (this.listBooks.size() == Student.MAX_NUMBER_PHD) {
@@ -110,17 +112,14 @@ public class Student {
 		}
 	}
 
-
 	/**
-	 * This method returns list of books that the student borrowed
-	 * 
-	 * @return list of books that the students borrowed
+	 * print list of books that the student borrowed (call book.toString())
 	 */
 	public void printListBooks() {
 		System.out.println(this.toString() +" have borrowed " + this.listBooks.size() + " books.");
 		System.out.println("List of books:");
 		for (Book b: this.listBooks) {
-			System.out.println(b);
+			System.out.println(b);//call book.toString()
 		}
 	}
 
