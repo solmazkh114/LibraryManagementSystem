@@ -18,15 +18,15 @@ public class DataStore {
 
 	// constructor
 	/**
-	 * Create datastore object containing a list of books and a list of students 
-	 * As soon as instantiating an object from DataStore Class, load data
+	 * Create datastore object containing a list of books and a list of students As
+	 * soon as instantiating an object from DataStore Class, load data
 	 */
 	public DataStore() {
 		this.studentsData = new ArrayList<Student>();
 		this.booksData = new ArrayList<Book>();
 		loadData();
 	}
-	
+
 	/**
 	 * Add books and students to their list
 	 */
@@ -77,9 +77,10 @@ public class DataStore {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Finds students using their IDs
+	 * 
 	 * @param studentID to find
 	 * @return student with given ID
 	 * @throws Exception when the ID does not exist in the studetnsData
@@ -90,11 +91,12 @@ public class DataStore {
 				return s;
 			}
 		}
-		throw new Exception("Student Not found!");
+		throw new Exception("Student ID was not Found!");
 	}
 
 	/**
 	 * Find students using their name
+	 * 
 	 * @param name to find
 	 * @return student with given name
 	 * @throws Exception when the name does not exist in the studetnsData
@@ -105,11 +107,12 @@ public class DataStore {
 				return s;
 			}
 		}
-		throw new Exception("Student Not found!");
+		throw new Exception("Student name was not found!");
 	}
 
 	/**
 	 * Finds a book using its ID
+	 * 
 	 * @param ID to find
 	 * @return a book with the given ID
 	 * @throws Exception when the ID does not exist in the booksData
@@ -120,11 +123,12 @@ public class DataStore {
 				return b;
 			}
 		}
-		throw new Exception("Book Not found!");
+		throw new Exception("Book ID was not found!");
 	}
 
 	/**
 	 * Find a book by its title
+	 * 
 	 * @param title to find
 	 * @return a book with the given title
 	 * @throws Exception when title does not exist in the booksData
@@ -135,7 +139,7 @@ public class DataStore {
 				return b;
 			}
 		}
-		throw new Exception("Book Not found!");
+		throw new Exception("Book title was not found!");
 	}
 
 }
