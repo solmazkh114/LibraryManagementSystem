@@ -4,11 +4,12 @@ import java.util.Scanner;
 
 public class Library {
 
-	private DataStore dataStore; //Make dataStore inaccessible outside of this class
+	private DataStore dataStore; //Declare dataStore as private to prevent direct access from outside this class.
+
 
 	//Class Constructor
 	/**
-	 * Instantiate DataStore class when instantiate Library class
+	 * Instantiate the DataStore class automatically when the Library class is instantiated
 	 */
 	public Library() {
 		dataStore = new DataStore();
