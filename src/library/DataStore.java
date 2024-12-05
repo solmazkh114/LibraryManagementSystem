@@ -90,7 +90,7 @@ public class DataStore {
 				return s;
 			}
 		}
-		throw new Exception("Not found!");
+		throw new Exception("Student Not found!");
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class DataStore {
 				return s;
 			}
 		}
-		throw new Exception("Not found!");
+		throw new Exception("Student Not found!");
 	}
 
 	/**
@@ -120,7 +120,7 @@ public class DataStore {
 				return b;
 			}
 		}
-		throw new Exception("Not found!");
+		throw new Exception("Book Not found!");
 	}
 
 	/**
@@ -135,7 +135,7 @@ public class DataStore {
 				return b;
 			}
 		}
-		throw new Exception("Not found!");
+		throw new Exception("Book Not found!");
 	}
 
 }
