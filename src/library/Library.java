@@ -1,10 +1,12 @@
 package library;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Library {
 
-	private DataStore dataStore; // Declare dataStore as private to prevent direct access from outside this class.
+	private DataStore dataStore; // Declare dataStore as private to prevent direct access from outside this
+									// class.
 
 	// Class Constructor
 	/**
@@ -15,10 +17,53 @@ public class Library {
 		dataStore = new DataStore();
 	}
 
+	/**
+	 * The main function of the program Responsible to run the code
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		Library library = new Library();
 		library.run();
+	}
+
+	/**
+	 * Get student name and book title from user Loop until a valid name and title
+	 * are given
+	 * 
+	 * @return a an ArrayList containing founded student and founded book
+	 */
+	public ArrayList<Object> getInput() {
+		ArrayList<Object> outputList = new ArrayList<Object>();
+		Student student = null;
+		Book book = null;
+		Scanner scanner = new Scanner(System.in);
+
+		// Loop until a valid student is found
+		while (student == null) {
+			System.out.println("Enter full name of student:");
+			String inputStudentName = scanner.nextLine();
+			try {
+				student = dataStore.findStudentByName(inputStudentName);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+
+		// Loop until a valid book is found
+		while (book == null) {
+			System.out.println("Enter book title: ");
+			String inputBookTitle = scanner.nextLine();
+			try {
+				book = dataStore.findBookByTitle(inputBookTitle);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		outputList.add(student);
+		outputList.add(book);
+		return outputList;
 	}
 
 	/**
@@ -41,93 +86,35 @@ public class Library {
 		scanner.nextLine(); // to consume new line character
 
 		if (userIntention == 1) {
-			Student student = null;
-			Book book = null;
 
-			// Loop until a valid student is found
-			while (student == null) {
-				System.out.println("Enter full name of student:");
-				String inputStudentName = scanner.nextLine();
-				try {
-					student = dataStore.findStudentByName(inputStudentName);
-				} catch (Exception e) {
-					if (e.getMessage().equalsIgnoreCase("Student name was not found!")) {
-						System.out.println("Student not found. Please enter the name again.");
-					} else {
-						e.printStackTrace(); // For other exceptions
-						return; // Exit the method if an unexpected exception occurs
-					}
-				}
-			}
+			// get student name and book title
+			ArrayList<Object> inputList = getInput();
+			Student student = (Student) inputList.get(0);
+			Book book = (Book) inputList.get(1);
 
-			// Loop until a valid book is found
-			while (book == null) {
-				System.out.println("Enter book title: ");
-				String inputBookTitle = scanner.nextLine();
-				try {
-					book = dataStore.findBookByTitle(inputBookTitle);
-				} catch (Exception e) {
-					if (e.getMessage().equalsIgnoreCase("Book title was not found!")) {
-						System.out.println("Book not found. Please enter the title again.");
-					} else {
-						e.printStackTrace(); // For other exceptions
-						return; // Exit the method if an unexpected exception occurs
-					}
-				}
-			}
-
-			// Now that both a valid student and book are found, proceed with borrowing
+			// try to borrow the book
 			try {
 				student.borrowBook(book);
+				System.out.println("Done!");
 			} catch (Exception e) {
-				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
 
 			student.printListBooks();
-			
+
 		} else if (userIntention == 2) {
-			Student student = null;
-			Book book = null;
 
-			// Loop until a valid student is found
-			while (student == null) {
-				System.out.println("Enter full name of student:");
-				String inputStudentName = scanner.nextLine();
-				try {
-					student = dataStore.findStudentByName(inputStudentName);
-				} catch (Exception e) {
-					if (e.getMessage().equalsIgnoreCase("Student name was not found!")) {
-						System.out.println("Student not found. Please enter the name again.");
-					} else {
-						e.printStackTrace(); // For other exceptions
-						return; // Exit the method if an unexpected exception occurs
-					}
-				}
-			}
+			// get student name and book title
+			ArrayList<Object> inputList = getInput();
+			Student student = (Student) inputList.get(0);
+			Book book = (Book) inputList.get(1);
 
-			// Loop until a valid book is found
-			while (book == null) {
-				System.out.println("Enter book title: ");
-				String inputBookTitle = scanner.nextLine();
-				try {
-					book = dataStore.findBookByTitle(inputBookTitle);
-				} catch (Exception e) {
-					if (e.getMessage().equalsIgnoreCase("Book title was not found!")) {
-						System.out.println("Book not found. Please enter the title again.");
-					} else {
-						e.printStackTrace(); // For other exceptions
-						return; // Exit the method if an unexpected exception occurs
-					}
-				}
-			}
-
-			// Now that both a valid student and book are found, proceed with returning
-
+			// try to return the book
 			try {
 				student.returnBook(book);
+				System.out.println("Done!");
 			} catch (Exception e) {
-				e.printStackTrace();
-				return;
+				System.out.println(e.getMessage());
 			}
 			student.printListBooks();
 
