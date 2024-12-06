@@ -68,19 +68,20 @@ public class Student {
 	 *                   book is not available (book.availableNumber =0)
 	 */
 	public void borrowBook(Book book) throws Exception {
+		// check the book is in list of student's book
 		if (this.listBooks.contains(book)) {
-			throw new Exception("Student already borrowed this book");
+			throw new Exception("Student already borrowed this book"); // throw exception and exit the program
 		}
 		// check student meet the maximum number of books
 		if (this.metMax()) {
 			throw new Exception("Already achieved the maximum number of books that the student can borrow");
 		}
-		if (book.checkAvailability()) {
-			book.availableNumber -= 1;
-			this.listBooks.addFirst(book);
-		} else {
+		if (!book.checkAvailability()) {
 			throw new Exception("This book is not available");
 		}
+		book.availableNumber -= 1;
+		this.listBooks.addFirst(book);
+
 	}
 
 	/**
@@ -119,14 +120,15 @@ public class Student {
 	 * @throws Exception if the book does not exist in the list of student's book
 	 */
 	public void returnBook(Book book) throws Exception {
-		// First check if the book exists in the list of books
-		if (this.listBooks.contains(book)) {
-			// remove the book from listBooks
-			this.listBooks.remove(book);
-			book.availableNumber += 1;
-		} else {
+		// First check if the book does not exist in the list of books, then throw an
+		// exception and exist the program
+		if (! this.listBooks.contains(book)) {
 			throw new Exception("The book does not exist in the list of your books.");
 		}
+		// remove the book from listBooks
+		this.listBooks.remove(book);
+		book.availableNumber += 1;
+
 	}
 
 }
