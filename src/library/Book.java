@@ -19,30 +19,34 @@ public class Book {
 	String ID;
 
 	/**
-	 * the total number of the book in the library
+	 * the total number of copies of the book in the library
 	 */
-	int totalNumber;
+	int totalNumCopies = 0;
 
 	/**
-	 * the available number of the book in the library
+	 * the available number of the copies of the book in the library
 	 */
-	int availableNumber;
+	int availableNumCopies = 0;
+
+	/**
+	 * Book ISBN number
+	 */
+	String isbn;
 
 	/**
 	 * Constructor of the book's class: create a book object
 	 * 
-	 * @param title:  title of the book
-	 * @param author: name of the author of the book
-	 * @param ID:     the book's id
+	 * @param title  title of the book
+	 * @param author name of the author of the book
+	 * @param ID     the book's id
 	 */
 
 	// class Constructor
-	public Book(String title, String author, String ID, int totalNumber) {
+	public Book(String ID, String title, String author) {
 		this.title = title;
 		this.author = author;
 		this.ID = ID;
-		this.totalNumber = totalNumber;
-		this.availableNumber = totalNumber;
+		this.isbn = null;
 	}
 
 	/**
@@ -53,29 +57,17 @@ public class Book {
 	}
 
 	/**
-	 * Return total number of the book
-	 * 
-	 * @return
+	 * override equals method to return true if id and title of the two books are
+	 * the same
 	 */
-	public int getTotalNumber() {
-		return this.totalNumber;
-	}
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
 
-	/**
-	 * Return the available number of the book
-	 * 
-	 * @return the number of the book that are available
-	 */
-	public int getAvailableNumber() {
-		return this.availableNumber;
-	}
+		if (obj == null || getClass() != obj.getClass())
+			return false;
 
-	/**
-	 * Check whether the book is available or not
-	 * 
-	 * @return true if it is available, otherwise, returns false
-	 */
-	public boolean checkAvailability() {
-		return (this.availableNumber > 0);
+		Book book = (Book) obj;
+		return ID.equals(book.ID) && title.equals(book.title);
 	}
 }
