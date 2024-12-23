@@ -1,10 +1,9 @@
 package library;
 
 public class Book {
-	// Instance variables
 
 	/**
-	 * name of the book
+	 * title of the book
 	 */
 	String title;
 
@@ -61,13 +60,8 @@ public class Book {
 	 * the same
 	 */
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
 
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-
-		Book book = (Book) obj;
-		return ID.equals(book.ID) && title.equals(book.title);
+		Book otherBook = (Book) obj;
+		return this.ID.equals(otherBook.ID) && this.title.equals(otherBook.title);
 	}
 }
