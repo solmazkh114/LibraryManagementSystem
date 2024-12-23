@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class ConnectToDatabase {
 	private static final String DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=Library;encrypt=true;trustServerCertificate=true";
-	private static Connection connection;
+	private static Connection CONNECTION;
 
 	private static Properties loadProperties() throws IOException {
 		Properties props = new Properties();
@@ -20,23 +20,23 @@ public class ConnectToDatabase {
 	}
 	// Get the connection instance
     public static Connection getConnection() throws SQLException, IOException {
-        if (connection == null || connection.isClosed()) {
+        if (CONNECTION == null || CONNECTION.isClosed()) {
             Properties props = loadProperties();
    
             String user = props.getProperty("db.user");
             String password = props.getProperty("db.password");
 
-            connection = DriverManager.getConnection(DB_URL, user, password);
+            CONNECTION = DriverManager.getConnection(DB_URL, user, password);
             System.out.println("Connected to the database.");
         }
-        return connection;
+        return CONNECTION;
     }
 
 	// Close the connection
 	public static void closeConnection() {
 		try {
-			if (connection != null && !connection.isClosed()) {
-				connection.close();
+			if (CONNECTION != null && CONNECTION.isClosed()) {
+				CONNECTION.close();
 				//System.out.println("Connection closed.");
 			}
 		} catch (SQLException e) {

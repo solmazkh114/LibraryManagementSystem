@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class DataFetcher {
 
-	private static Connection connection;
+	private static Connection CONNECTION;
 
 	public DataFetcher() throws SQLException, IOException {
-		connection = ConnectToDatabase.getConnection();
+		CONNECTION = ConnectToDatabase.getConnection();
 	}
 
 	/**
@@ -32,7 +32,7 @@ public class DataFetcher {
 		else
 			query = "SELECT first_name, last_name FROM users.students WHERE student_id = ?;";
 
-		preStm = connection.prepareStatement(query);
+		preStm = CONNECTION.prepareStatement(query);
 		preStm.setString(1, userID);
 
 		ResultSet result = preStm.executeQuery();
@@ -51,7 +51,7 @@ public class DataFetcher {
 	 */
 	public Book fetchBook(int copy_id) throws SQLException {
 		PreparedStatement preStm;
-		preStm = connection.prepareStatement("SELECT b.book_id, b.title, b.author FROM catalog.books b\r\n"
+		preStm = CONNECTION.prepareStatement("SELECT b.book_id, b.title, b.author FROM catalog.books b\r\n"
 				+ "INNER JOIN catalog.copies c\r\n" + "ON c.book_id = b.book_id\r\n" + "WHERE c.copy_id = ?;");
 		preStm.setInt(1, copy_id);
 
@@ -85,7 +85,7 @@ public class DataFetcher {
 						+ "INNER JOIN users.students s ON c.student_id = s.student_id INNER JOIN catalog.books b "
 						+ "ON b.book_id = c.book_id WHERE s.student_id =?;";
 			}
-			preStm = connection.prepareStatement(query);
+			preStm = CONNECTION.prepareStatement(query);
 			String userID = user.userID;
 			preStm.setString(1, userID);
 
@@ -112,7 +112,7 @@ public class DataFetcher {
 	 */
 	public void fetchTotalNumCopies(Book book) throws SQLException {
 		PreparedStatement preStm;
-		preStm = connection
+		preStm = CONNECTION
 				.prepareStatement("SELECT COUNT(copy_id) total_copies FROM catalog.copies WHERE book_id = ?;");
 		String bookID = book.ID;
 		preStm.setString(1, bookID);
@@ -123,7 +123,7 @@ public class DataFetcher {
 
 	public void fetchAvailableNumCopies(Book book) throws SQLException {
 		PreparedStatement preStm;
-		preStm = connection.prepareStatement(
+		preStm = CONNECTION.prepareStatement(
 				"SELECT COUNT(copy_id) available_copies from catalog.copies WHERE book_id = ? and status= 'Available';");
 		String bookID = book.ID;
 		preStm.setString(1, bookID);
@@ -144,7 +144,7 @@ public class DataFetcher {
 		PreparedStatement preStm;
 		String studentID = null;
 		String facultyID = null;
-		preStm = connection.prepareStatement("SELECT student_id, faculty_id FROM catalog.copies WHERE copy_id = ?;");
+		preStm = CONNECTION.prepareStatement("SELECT student_id, faculty_id FROM catalog.copies WHERE copy_id = ?;");
 		preStm.setInt(1, copyID);
 
 		ResultSet result = preStm.executeQuery();
@@ -167,7 +167,7 @@ public class DataFetcher {
 	public String fetchCopyStatus(int copyID) throws SQLException {
 		PreparedStatement preStm;
 		String status = null;
-		preStm = connection.prepareStatement("SELECT status FROM catalog.copies WHERE copy_id = ? ;");
+		preStm = CONNECTION.prepareStatement("SELECT status FROM catalog.copies WHERE copy_id = ? ;");
 		preStm.setInt(1, copyID);
 
 		ResultSet result = preStm.executeQuery();

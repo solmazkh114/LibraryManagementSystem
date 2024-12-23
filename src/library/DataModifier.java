@@ -6,10 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DataModifier {
-	private static Connection connection;
+	private static Connection CONNECTION;
 
 	public DataModifier() throws SQLException, IOException {
-			connection = ConnectToDatabase.getConnection();
+			CONNECTION = ConnectToDatabase.getConnection();
 	}
 	
 	/**
@@ -27,7 +27,7 @@ public class DataModifier {
 			column = "faculty_id";
 		
 		String query = "UPDATE catalog.copies SET status = 'Checked Out', " + column + " = ? WHERE copy_id =?;";
-		preStm = connection.prepareStatement(query);
+		preStm = CONNECTION.prepareStatement(query);
 		preStm.setString(1, userID);
 		preStm.setInt(2, copyID);
 
@@ -41,7 +41,7 @@ public class DataModifier {
 	 */
 	public void updateDBForReturn(int copyID) throws SQLException {
 		PreparedStatement preStm;
-		preStm = connection.prepareStatement(
+		preStm = CONNECTION.prepareStatement(
 				"UPDATE catalog.copies SET status = 'Available', student_id = NUll, faculty_id= Null WHERE copy_id =?;");
 		preStm.setInt(1, copyID);
 		preStm.executeUpdate();
