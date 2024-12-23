@@ -5,12 +5,12 @@ import java.sql.SQLException;
 
 public class LoanManagement {
 
-	DataFetcher datafetcher;
-	DataModifier dataModifier;
+	static DataFetcher FETCHER;
+	static DataModifier MODIFIER;
 
 	public LoanManagement() throws SQLException, IOException {
-		datafetcher = new DataFetcher();
-		dataModifier = new DataModifier();
+		FETCHER = new DataFetcher();
+		MODIFIER = new DataModifier();
 	}
 
 	/**
@@ -20,7 +20,7 @@ public class LoanManagement {
 	 * @throws SQLException
 	 */
 	public boolean checkAvailability(Book book) throws SQLException {
-		datafetcher.fetchAvailableNumCopies(book);
+		FETCHER.fetchAvailableNumCopies(book);
 		return (book.availableNumCopies > 0);
 	}
 	
@@ -31,7 +31,7 @@ public class LoanManagement {
 	 * @throws SQLException
 	 */
 	public boolean checkAvailibitlyOfCopy(int copyID) throws SQLException {
-		String status = datafetcher.fetchCopyStatus(copyID);
+		String status = FETCHER.fetchCopyStatus(copyID);
 		return status.equals("Available");
 	}
 
@@ -42,9 +42,9 @@ public class LoanManagement {
 	 * @throws Exception if borrow eligibilities were not meet
 	 */
 	public void borrowProcess(int copyID, String userID) throws Exception {
-		Book book = datafetcher.fetchBook(copyID);
-		User user = datafetcher.fetchUser(userID);
-		datafetcher.fetchUserListBooks(user);
+		Book book = FETCHER.fetchBook(copyID);
+		User user = FETCHER.fetchUser(userID);
+		FETCHER.fetchUserListBooks(user);
 
 		//check borrow eligibility
 		borrowEligibility(user, book, copyID);
@@ -54,7 +54,7 @@ public class LoanManagement {
 		user.listBooks.addFirst(book);
 		
 		//update database
-		dataModifier.updateDBForBorrow(copyID, user);
+		MODIFIER.updateDBForBorrow(copyID, user);
 
 		user.printListBooks();
 		ConnectToDatabase.closeConnection();
@@ -77,10 +77,10 @@ public class LoanManagement {
 		if (user.metMax())
 			throw new Exception("Already achieved the maximum number of books that the student can borrow");
 
-		if (!checkAvailability(book))
+		if (!this.checkAvailability(book))
 			throw new Exception("This book is not available");
 
-		if (!checkAvailibitlyOfCopy(copyID))
+		if (!this.checkAvailibitlyOfCopy(copyID))
 			throw new Exception("This copy of the book is not available");
 	}
 
@@ -91,20 +91,20 @@ public class LoanManagement {
 	 * @throws Exception if the book does not exist in the list of student's book
 	 */
 	public void returnBook(int copyID) throws Exception {
-		String userID = datafetcher.fetchUserIDWhoBorrowedBook(copyID);
+		String userID = FETCHER.fetchUserIDWhoBorrowedBook(copyID);
 		if (userID==null)
 			throw new Exception("This copy of the book was not borrowed!");
-		User user = datafetcher.fetchUser(userID);
+		User user = FETCHER.fetchUser(userID);
 
-		datafetcher.fetchUserListBooks(user);
-		Book book = datafetcher.fetchBook(copyID);
+		FETCHER.fetchUserListBooks(user);
+		Book book = FETCHER.fetchBook(copyID);
 
 		if (!user.listBooks.contains(book))
 			throw new Exception("The book does not exist in the list of your books.");
 
 		// remove the book from listBooks
 		user.listBooks.remove(book);
-		dataModifier.updateDBForReturn(copyID);
+		MODIFIER.updateDBForReturn(copyID);
 		System.out.println("Book return done!");
 		user.printListBooks();
 
