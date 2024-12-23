@@ -2,11 +2,8 @@
 
 This project is a basic library management system implemented in Java. The system allows users to borrow and return books. It is designed to manage student information, books in the library, and the borrowing and returning of books. 
 
-We used a Microsoft SQL Server database to store and handle users' and books' info. In the following, we explain how to setup an MS. SQL server Java driver.
+We used a Microsoft SQL Server database to store and handle users' and books' info. In the sequel, after providing a general overview of the classes in this project, we will explain how to set up an MS. SQL Server Java driver.
 
-## Features
-- **Borrow Books**: Allows students to borrow books from the library.
-- **Return Books**: Allows students to return borrowed books.
 
 ## Classes Overview
 
@@ -24,7 +21,10 @@ The `Book` class represents a book in the library. Each book has a title, author
 The User class represents all types of users in the system, including students and faculty members. Each user has a name, ID, and a list of borrowed books.
 
 ### 4. `ConnectToDatabase`
-This class is responsible for establishing the connection to the SQL Server database. It retrieves database credentials from the `config.properties` file and connects to the database using the JDBC driver.
+This class is responsible for establishing the connection to the SQL Server database. It retrieves database credentials from the `config.properties` file and connects to the database using the JDBC driver. So, you need to create a `config.properties` file and save your SQL Server username and password in this format:
+
+ - db.user= Your_User_Name
+ - db.password= Your_Password
 
 ### 5. `DataFetcher`
 This class handles all the `SELECT` queries in the system. It retrieves data from the database, such as user information, book details, and borrowing records.
