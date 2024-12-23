@@ -94,13 +94,9 @@ public class User {
 	 * @return true if two objects have the same name and userID
 	 */
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
 
-		User user = (User) obj;
-		return userID.equals(user.userID) && name.equals(user.name);
+		User otherUser = (User) obj;
+		return this.userID.equals(otherUser.userID) && this.name.equals(otherUser.name);
 	}
 
 }
